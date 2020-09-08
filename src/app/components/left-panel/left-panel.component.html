@@ -1,0 +1,25 @@
+<!--<button id="loginBtn" (onclick)="login()">Login</button>-->
+
+<button class="loginBtn" data-toggle="modal" data-target="#myModal">Login</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Login</h4>
+        </div>
+
+            <form class="modal-body">
+                <input type="text" [(ngModel)]="username" name="username" id="login" class="fadeIn second" placeholder="login">
+                <input type="password" [(ngModel)]="password" name="password" id="password" class="fadeIn third" placeholder="password">
+            </form>
+
+        <div class="modal-footer">
+            <button class="loginBtn" (click)="login()">Login</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>

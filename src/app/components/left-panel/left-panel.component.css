@@ -1,0 +1,13 @@
+.loginBtn{
+    width: 10vw;
+    height: 2vw;
+}
+
+.modal-footer, .modal-body {
+    justify-content: center;
+    text-align: center;
+}
+
+.modal-body input {
+    margin:5px;
+}

@@ -1,0 +1,17 @@
+.mainContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.chatContainer {
+    /*height: 100%;*/
+    flex-grow: 1;
+    max-width: 90%;
+}
+
+.leftPanel {
+    /*height: 100%;*/
+    flex: 2;
+    max-width: 10%;
+}
