@@ -16,6 +16,8 @@ export class LeftPanelComponent implements OnInit {
 
   username = "";
   password = "";
+  selectedChannel = "";
+  channels = ["Channel 1", "Channel 2", "Channel 3"];
 
   ngOnInit(): void {
 
