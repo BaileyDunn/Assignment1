@@ -1,19 +1,16 @@
 <div class="chat-Component">
     <div>
-        <h1 class="chat-Heading">{{selectedRoom}}</h1>
+        <h1 class="chat-Heading">{{headerMessage}}{{selectedChannel}}</h1>
     </div>
     <div class="chat-Messages">
-        
+        <ul class="messageList">
+            <li *ngFor="let message of messages">{{message.sender}}-{{message.sent}} - {{message.message}}</li>
+        </ul>
     </div>
-    <!-- <div class="input-Section"> -->
-        <form id="chatForm">
-                <button id="imageBtn" (onclick)="uploadImage()">...</button>
-
-                <input id="messageInput" type="text">
-          
-                <button id="sendBtn" (onclick)="sendMessage()">Send</button>
-         
-        </form>
-    <!-- </div> -->
+        <div id="chatForm">
+            <button id="imageBtn" (onclick)="uploadImage()">...</button>
+            <input [(ngModel)]="messageInput" id="messageInput" type="text">
+            <button id="sendBtn" (onclick)="sendMessage()">Send</button>
+        </div>
 </div>
 

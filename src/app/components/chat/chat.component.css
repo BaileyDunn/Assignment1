@@ -33,3 +33,7 @@
 #sendBtn {
     flex: 2;
 }
+
+.messageList {
+    list-style-type: none;
+}

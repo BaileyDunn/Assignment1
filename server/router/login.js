@@ -2,27 +2,31 @@ var fs = require('fs');
 
 module.exports = function(req, res) {
     console.log(req.body);
-    // fs.readFile('data/users.json', 'utf8', function(err, data) {
-    //     if(err) throw err;
-    //     let users = JSON.parse(data);
-    //     console.log("Users are as below:")
-    //     console.log(users);
-    //     let index = users.findIndex(user => ((user.username == req.body.username) && (user.password == req.body.password)));
-    //     console.log(index);
+    fs.readFile('data/users.json', 'utf8', function(err, data) {
+        if(err) throw err;
+        let users = JSON.parse(data);
+        //console.log("Users are as below:")
+        //console.log(users);
+        let user = users.find(user => ((user.username == req.body.username) && (user.password == req.body.password)));
+        // console.log(index);
+        if(user === undefined) {
+            req.body = null
+        } else {
+            req.body = user;
+        }
 
     
-    //     if(index != -1) {
-    //         req.body.valid = true;
-    //     }
-    //     res.send({"result": req.body});
-    // });
+        // if(index != -1) {
+        //     req.body.valid = true;
+        // }
+        res.send({"result": req.body});
+    });
 
     //Used this to origionally setup the Json file
-    // console.log("Test");
-    // var user1 = new Name("Test", "User");
-    // var user2 = new Name("Bailey", "1");
+    //console.log("Test");
+    // var user2 = new Account("Bailey", "1", "bailey@test.com.au", true);
     // let users = new Array(0);
-    // users.push(user1);
+    // // users.push(user1);
     // users.push(user2);
     // console.log(users);
     // json = JSON.stringify(users);
@@ -37,9 +41,11 @@ class Account {
     username;
     password;
     email;
-    constructor(Name, Password) { 
+    superUser
+    constructor(Name, Password, Email, SuperUser) { 
         this.username = Name;
         this.password = Password;
-        this.email = "test@test.com";
+        this.email = Email;
+        this.superUser = SuperUser
      }
-  }
+}

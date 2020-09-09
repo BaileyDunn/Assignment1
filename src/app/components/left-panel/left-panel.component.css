@@ -1,6 +1,9 @@
 .loginBtn{
     width: 10vw;
     height: 2vw;
+    margin-top:5px;
+    padding: 3px;
+    box-shadow: darkgray 5px 5px 10px;
 }
 
 .modal-footer, .modal-body {
@@ -10,4 +13,30 @@
 
 .modal-body input {
     margin:5px;
+}
+
+#channelLabel {
+    margin: 15px 5px 2px 5px;
+}
+
+#channelSelect {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.manageBtn {
+    width: 100%;
+    margin-top:5px;
+    padding: 3px;
+    box-shadow: darkgray 5px 5px 10px;
+}
+
+.createInput {
+    width: 50%;
+    margin: 5px;
+    padding: 2px;
+}
+
+.createRemoveBtn {
+    width: 25%;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-chat',
@@ -6,12 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  headerMessage = "Join a Channel";
+  selectedChannel:string = "";
 
-  public selectedRoom:string = "Login to Join a Room";
+  messageInput:string="";
+  messages:message[] = [];
+  inChannel = false;
 
-  constructor() { }
+  constructor(private socketService:SocketService) { }
 
   ngOnInit(): void {
+    this.socketService.getMessage((m)=>{
+      this.messages.push(m)
+    });
+    this.socketService.joinedChannel((c)=> {
+      this.selectedChannel = c;
+      this.headerMessage = "";
+      this.inChannel = true;
+    });
+    this.socketService.leftChannel((c)=> {
+      this.selectedChannel = "";
+      this.headerMessage = "Join a Channel";
+      this.messages = [];
+      this.inChannel = false;
+    })
   }
 
   uploadImage() {
@@ -19,7 +38,22 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
-
+    if(this.messageInput && this.inChannel) {
+      this.socketService.sendMessage(this.messageInput);
+      this.messageInput = "";
+    }
   }
 
+}
+
+class message {
+  message:string;
+  sender:string;
+  sent:string;
+  constructor(Message, Sender, Sent:Date) {
+    console.log();
+    this.message = Message;
+    this.sender = Sender;
+    this.sent = Sent.toLocaleTimeString();
+  }
 }
