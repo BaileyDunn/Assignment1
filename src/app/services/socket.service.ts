@@ -65,7 +65,8 @@ export class SocketService {
     this.socket.on("getGroupList", result=>next(result));
   }
 
-  sendMessage(message:string) {
+  sendMessage(message) {
+    console.log(message);
     this.socket.emit("message", message);
   }
 

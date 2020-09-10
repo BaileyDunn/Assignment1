@@ -1,5 +1,6 @@
 <!--  Login Modal  -->
-<button class="loginBtn" data-toggle="modal" data-target="#loginModal">Login</button>
+<button class="loginBtn" data-toggle="modal" data-target="#loginModal" *ngIf="!loggedIn">{{loginBtnTxt}}</button>
+<button class="loginBtn" (click)="login()" *ngIf="loggedIn">{{loginBtnTxt}}</button>
 <!-- Modal -->
 <div id="loginModal" class="modal fade">
     <div class="modal-dialog">
@@ -23,100 +24,101 @@
     </div>
 </div>
 
-
-<!--  Channel Selection  -->
-<form>
-    <p id="channelLabel">Available Channels</p>
-    <select id="channelSelect" [(ngModel)]="selectedChannel" ng-change="channelChanged()">
-        <option [ngValue]="null">Select Channel</option>
-        <option *ngFor="let channel of channels">{{channel}}</option>
-    </select>
-    <button class="manageBtn" (click)="joinChannel()">Join Channel</button>
-</form>
-
-
-<!--  Channel Management Modal  -->
-<button class="manageBtn" id="channelBtn" data-toggle="modal" data-target="#channelModal">Channel Management</button>
-<!-- Modal -->
-<div id="channelModal" class="modal fade">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Channel Management</h4>
-            </div>
-                
-            <div class="modal-body">
-                <input type="text" [(ngModel)]="newChannel" class="fadeIn second createInput" placeholder="Channel name">
-                <button (click)="createChannel()" class="createRemoveBtn">Create</button>
-            </div>
-            <div class="modal-body">
-                <select [(ngModel)]="selectedRemoveChannel" class="createInput">
-                    <option [ngValue]="null">Select Channel</option>
-                    <option *ngFor="let channel of channels">{{channel}}</option>
-                </select>
-                <button (click)="removeChannel()" class="createRemoveBtn">Remove</button>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div *ngIf="loggedIn">
+    <!--  Channel Selection  -->
+    <form>
+        <p id="channelLabel">Available Channels</p>
+        <select [(ngModel)]="selectedChannel" name ="selectedChannel" id="channelSelect">
+            <option [ngValue]="null">Select Channel</option>
+            <option *ngFor="let channel of channels" value="{{channel}}">{{channel}}</option>
+        </select>
+        <button class="manageBtn" (click)="joinChannel()">Join Channel</button>
+    </form>
 
 
-<!-- Group Management Modal  -->
-<button class="manageBtn" id="groupBtn" data-toggle="modal" data-target="#groupModal">Group Management</button>
-<!-- Modal -->
-<div id="groupModal" class="modal fade">
-    <div class="modal-dialog">
+    <!--  Channel Management Modal  -->
+    <button class="manageBtn" id="channelBtn" data-toggle="modal" data-target="#channelModal">Channel Management</button>
+    <!-- Modal -->
+    <div id="channelModal" class="modal fade">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Group Management</h4>
-            </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Channel Management</h4>
+                </div>
+                    
+                <div class="modal-body">
+                    <input type="text" [(ngModel)]="newChannel" class="fadeIn second createInput" placeholder="Channel name">
+                    <button (click)="createChannel()" class="createRemoveBtn">Create</button>
+                </div>
+                <div class="modal-body">
+                    <select [(ngModel)]="selectedRemoveChannel" name="selectedRemoveChannel" class="createInput">
+                        <option [ngValue]="null">Select Channel</option>
+                        <option *ngFor="let channel of channels">{{channel}}</option>
+                    </select>
+                    <button (click)="removeChannel()" class="createRemoveBtn">Remove</button>
+                </div>
 
-            <div class="modal-body">
-                <input type="text" [(ngModel)]="newGroup" class="fadeIn second createInput" placeholder="Group name">
-                <button (click)="createGroup()" class="createRemoveBtn">Create</button>
-            </div>
-            <div class="modal-body">
-                <select [(ngModel)]="selectedRemoveGroup" class="createInput">
-                    <option [ngValue]="null">Select Group</option>
-                    <option *ngFor="let group of groups">{{group}}</option>
-                </select>
-                <button (click)="removeGroup()" class="createRemoveBtn">Remove</button>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<!-- User Management Modal  -->
-<button class="manageBtn" id="userBtn" data-toggle="modal" data-target="#userModal">User Management</button>
-<!-- Modal -->
-<div id="userModal" class="modal fade">
-    <div class="modal-dialog">
+    <!-- Group Management Modal  -->
+    <button class="manageBtn" id="groupBtn" data-toggle="modal" data-target="#groupModal">Group Management</button>
+    <!-- Modal -->
+    <div id="groupModal" class="modal fade">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">User Management</h4>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Group Management</h4>
+                </div>
+
+                <div class="modal-body">
+                    <input type="text" [(ngModel)]="newGroup" class="fadeIn second createInput" placeholder="Group name">
+                    <button (click)="createGroup()" class="createRemoveBtn">Create</button>
+                </div>
+                <div class="modal-body">
+                    <select [(ngModel)]="selectedRemoveGroup" name="selectedRemoveGroup" class="createInput">
+                        <option [ngValue]="null">Select Group</option>
+                        <option *ngFor="let group of groups">{{group}}</option>
+                    </select>
+                    <button (click)="removeGroup()" class="createRemoveBtn">Remove</button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
+        </div>
+    </div>
 
-            <div class="modal-body">
-                
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <!-- User Management Modal  -->
+    <button class="manageBtn" id="userBtn" data-toggle="modal" data-target="#userModal">User Management</button>
+    <!-- Modal -->
+    <div id="userModal" class="modal fade">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">User Management</h4>
+                </div>
+
+                <div class="modal-body">
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

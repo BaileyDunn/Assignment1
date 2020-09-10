@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 @Component({
   selector: 'app-chat',
@@ -30,7 +31,7 @@ export class ChatComponent implements OnInit {
       this.headerMessage = "Join a Channel";
       this.messages = [];
       this.inChannel = false;
-    })
+    });
   }
 
   uploadImage() {
@@ -39,8 +40,12 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     if(this.messageInput && this.inChannel) {
-      this.socketService.sendMessage(this.messageInput);
-      this.messageInput = "";
+      let username = sessionStorage.getItem("username");
+      if(username != null) {
+        this.socketService.sendMessage(new message(this.messageInput, username, new Date));
+        this.messageInput = "";
+      }
+      
     }
   }
 
@@ -51,7 +56,6 @@ class message {
   sender:string;
   sent:string;
   constructor(Message, Sender, Sent:Date) {
-    console.log();
     this.message = Message;
     this.sender = Sender;
     this.sent = Sent.toLocaleTimeString();
