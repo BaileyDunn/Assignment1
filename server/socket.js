@@ -13,7 +13,7 @@ module.exports = {
                 for(let i = 0; i < clientChannels.length; i++) {
                     //Find the senders current channel and emit a message to all users inside
                     if(clientChannels[i][0] == socket.id) {
-                        chat.to(clientChannels[i][1]).emit("sendMessage", message)
+                        chat.to(clientChannels[i][1]).emit("message", message)
                     }
                 }  
             });
@@ -35,12 +35,12 @@ module.exports = {
             });
 
             socket.on("removeChannel", (channelName)=> {
-                channels.splice(channels.indexOf(channelName) -1,1);
+                channels.splice(channels.indexOf(channelName),1);
                 chat.emit("getChannelList", JSON.stringify(channels));
             })
 
             socket.on("removeGroup", (groupName)=> {
-                groups.splice(groups.indexOf(groupName) -1,1);
+                groups.splice(groups.indexOf(groupName),1);
                 chat.emit("getGroupList", JSON.stringify(groups));
             })
 
@@ -52,18 +52,18 @@ module.exports = {
                 chat.emit("getGroupList", JSON.stringify(groups));
             });
 
-            socket.on("join", (channel) => {
+            socket.on("joinChannel", (channel) => {
                 if(channels.includes(channel)) {
                     socket.join(channel, () => {
                         inChannel = false;
-                        for(let i = 0; i < clients.length; i++) {
+                        for(let i = 0; i < clientChannels.length; i++) {
                             if(clients[i][0] == socket.id) {
                                 clientChannels[i][1] = channel;
                                 inChannel = true;
                             }
                         }
                         if(inChannel === false) {
-                            clients.push([socket.id, channel]);
+                            clientChannels.push([socket.id, channel]);
                         }
                     });
                     return chat.in(channel).emit("joinedChannel", channel);

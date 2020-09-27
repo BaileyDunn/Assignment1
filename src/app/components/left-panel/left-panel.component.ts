@@ -20,7 +20,8 @@ export class LeftPanelComponent implements OnInit {
   password = "";
   user:Account = null;
   loggedIn = false;
-  selectedChannel:string = null;
+  loginBtnTxt = "Login";
+  selectedChannel:string = null
   currentChannel:string = "";
 
   newChannel = "";
@@ -40,27 +41,38 @@ export class LeftPanelComponent implements OnInit {
       console.log(g)
       this.groups = JSON.parse(g);
     });
+    this.socketService.reqChannelList();
+    this.socketService.reqGroupList();
   }
 
   login() {
-    //console.log(this.username + this.password);
-    this.http.post(this.Root_url + "/login", { username: this.username, password: this.password }, httpOptions)
-    .subscribe((data: any) => {
-      if(data.result != null) {
-        this.user = data.result;
-        this.loggedIn = true;
-        //store into session
-        sessionStorage.setItem("username", this.user.username);
-        sessionStorage.setItem("email", this.user.email);
-        sessionStorage.setItem("super", this.user.superUser.toString());
-
-        //probably gonna wanna refresh side
-        this.socketService.reqChannelList();
-        this.socketService.reqGroupList();
-      } else {
-        alert("Incorrect username or password!");
-      }
-    });
+    if(this.loggedIn) {
+      this.user = null;
+      this.loggedIn = false;
+      sessionStorage.removeItem("username");
+      sessionStorage.removeItem("email");
+      sessionStorage.removeItem("super");
+      this.loginBtnTxt = "Login";
+    } else {
+      this.http.post(this.Root_url + "/login", { username: this.username, password: this.password }, httpOptions)
+      .subscribe((data: any) => {
+        if(data.result != null) {
+          this.user = data.result;
+          this.loggedIn = true;
+          //store into session
+          sessionStorage.setItem("username", this.user.username);
+          sessionStorage.setItem("email", this.user.email);
+          sessionStorage.setItem("super", this.user.superUser.toString());
+  
+          //probably gonna wanna refresh side
+          this.socketService.reqChannelList();
+          this.socketService.reqGroupList();
+          this.loginBtnTxt = "Logout";
+        } else {
+          alert("Incorrect username or password!");
+        }
+      });
+    }
   }
 
   channelChanged() {
@@ -74,9 +86,9 @@ export class LeftPanelComponent implements OnInit {
   }
 
   removeChannel() {
-    this.socketService.removeChannel(this.removeChannel);
+    this.socketService.removeChannel(this.selectedRemoveChannel);
     this.socketService.reqChannelList();
-    this.removeChannel = null;
+    this.selectedRemoveChannel = null;
   }
 
   createGroup() {
@@ -86,12 +98,13 @@ export class LeftPanelComponent implements OnInit {
   }
 
   removeGroup() {
-    this.socketService.removeGroup(this.removeGroup);
+    this.socketService.removeGroup(this.selectedRemoveGroup);
     this.socketService.reqGroupList();
-    this.removeChannel = null;
+    this.selectedRemoveGroup = null;
   }
 
   joinChannel() {
+    console.log(this.selectedChannel);
     if(this.selectedChannel != null) {
       this.socketService.joinChannel(this.selectedChannel)
     }

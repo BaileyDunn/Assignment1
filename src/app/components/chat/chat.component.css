@@ -13,6 +13,7 @@
 .chat-Messages {
     flex-grow: 50;
     background-color: whitesmoke;
+    overflow: auto;
 }
 /* .input-Section {
     width: 100vw;
