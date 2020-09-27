@@ -1,3 +1,7 @@
+var mongo = require("./data/mongo.js")
+mongo.connect();
+console.log("Moving on")
+
 var express = require('express'); //Used for routing
 var app = express();
 var http = require('http').Server(app); //used to provide http functionality
@@ -24,3 +28,5 @@ sockets.connect(io, port);
 server.listen(http, port);
 
 app.post('/login', require('./router/login'));
+
+//mongo.dbInit()
