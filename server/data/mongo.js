@@ -3,14 +3,21 @@ module.exports = {
     String: url = "mongodb://localhost:27017",
     undefined: db = null,
 
-    connect: async function() {
-        MongoClient.connect(url, function(err, client) {
-            if(err) {return console.log(err)}
-            const dbName = 'chatDb';
-            db = client.db(dbName);
-            console.log("DB connected!")
-            dbInit();    
-        });
+    connect: async function(executeFunction) {
+        // await MongoClient.connect(url, async function(err, client) {
+        //     if(err) {return console.log(err)}
+        //     const dbName = 'chatDb';
+        //     db = client.db(dbName);
+        //     console.log("DB connected!")
+        //     var result = await executeFunction(db); 
+        //     return result;  
+        // });
+        var client = await MongoClient.connect(url)
+        console.log("DB connected!")
+        const dbName = 'chatDb';
+        db = client.db(dbName);
+        var result = await executeFunction(db); 
+        return result;  
     }
 }
 

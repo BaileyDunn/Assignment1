@@ -1,7 +1,5 @@
-var mongo = require("./data/mongo.js")
-mongo.connect();
-console.log("Moving on")
-
+//var mongo = require("./data/mongo.js")
+// mongo.connect(mongo.dbInit());
 var express = require('express'); //Used for routing
 var app = express();
 var http = require('http').Server(app); //used to provide http functionality
@@ -27,6 +25,4 @@ const port = 3000;
 sockets.connect(io, port);
 server.listen(http, port);
 
-app.post('/login', require('./router/login'));
-
-//mongo.dbInit()
+app.post('/login', require('./router/getUser'));
