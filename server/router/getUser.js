@@ -6,10 +6,7 @@ var response = undefined;
 module.exports = function(req, res) {
     request = req;
     response = res;
-    //mongo.connect(getUser)
-    var user = read("users", request.body.username)
-    console.log("Heres the user: ");
-    console.log(user);
+    mongo.connect(getUser)
 }
 
 

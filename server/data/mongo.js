@@ -4,37 +4,17 @@ module.exports = {
     undefined: db = null,
 
     connect: async function(executeFunction) {
-        // await MongoClient.connect(url, async function(err, client) {
-        //     if(err) {return console.log(err)}
-        //     const dbName = 'chatDb';
-        //     db = client.db(dbName);
-        //     console.log("DB connected!")
-        //     var result = await executeFunction(db); 
-        //     return result;  
-        // });
-        var client = await MongoClient.connect(url)
-        console.log("DB connected!")
-        const dbName = 'chatDb';
-        db = client.db(dbName);
-        var result = await executeFunction(db); 
-        return result;  
+        await MongoClient.connect(url, async function(err, client) {
+            if(err) {return console.log(err)}
+            const dbName = 'chatDb';
+            db = client.db(dbName);
+            console.log("DB connected!")
+            var result = await executeFunction(db); 
+            return result;  
+        });  
     }
 }
 
-
-
-// function connect() {
-//     // MongoClient.connect(url, function(err, client) {
-//     //     if(err) {return console.log(err)}
-        
-            
-//     // });
-//     var client = await MongoClient.connect(url)
-//     const dbName = 'chatDb';
-//     db = client.db(dbName);
-//     console.log("DB connected!")
-// }
-    
     
 async function dbInit() {
     var collections = db.collectionNames('users', function(err, f) {

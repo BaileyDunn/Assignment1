@@ -2,7 +2,7 @@ const { updateLanguageServiceSourceFile } = require("typescript");
 var mongo = require("../data/mongo");
 var request = undefined;
 var response = undefined;
-var db = undefined;
+
 
 module.exports = function(req, res) {
     request = req;
@@ -11,8 +11,7 @@ module.exports = function(req, res) {
 }
 
 
-async function addUpdateUser(dbo) {
-    db = dbo;
+async function addUpdateUser(db) {
     var user = await db.collection("users").findOne({username: request.body.username})
     console.log(user);
     if(user == null) {
