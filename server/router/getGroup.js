@@ -6,14 +6,14 @@ var response = undefined;
 module.exports = function(req, res) {
     request = req;
     response = res;
-    mongo.connect(getUser)
+    mongo.connect(getGroup)
 }
 
 
-async function getUser(db) {
+async function getGroup(db) {
     res.send(
         {
-            "result": await db.collection("users").findOne({username: request.body.username})
+            "result": await db.collection("groups").findOne({groupName: request.body.groupName})
         }
     );
 }

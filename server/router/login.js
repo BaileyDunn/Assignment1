@@ -17,6 +17,6 @@ function login(db) {
         if(user.password === request.body.password) {
             success = true;
         }
-        res.send({ "success": success });
+        response.send({ "success": success });
     }
 }
