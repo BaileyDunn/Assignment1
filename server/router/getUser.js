@@ -1,5 +1,4 @@
 var mongo = require("../data/mongo");
-var read = require("../data/crud/read")
 var request = undefined;
 var response = undefined;
 

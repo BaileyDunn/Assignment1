@@ -5,14 +5,14 @@ var response = undefined;
 module.exports = function(req, res) {
     request = req;
     response = res;
-    mongo.connect(getGroup)
+    mongo.connect(getChannels)
 }
 
 
-async function getGroup(db) {
+async function getChannels(db) {
     res.send(
         {
-            "result": await db.collection("groups").findOne({groupName: request.body.groupName})
+            "result": await db.collection("groups").findOne({username: request.body.username})
         }
     );
 }
