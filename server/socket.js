@@ -1,3 +1,4 @@
+var sendMessage = require("./data/sendMessage")
 module.exports = {
     connect: function(io, port) {
         //List of socket id's in the that are connected and the room they are connected to
@@ -88,5 +89,9 @@ module.exports = {
             })
 
         })
+    },
+
+    sendMessageCallBack: function() {
+
     }
 }
