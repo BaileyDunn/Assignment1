@@ -25,4 +25,12 @@ const port = 3000;
 sockets.connect(io, port);
 server.listen(http, port);
 
-app.post('/login', require('./router/getUser'));
+//User Related
+app.post('/login', require('./router/User/login'));
+app.post('/getUser', require('./router/User/getUser'));
+app.post('/addUpdateUser', require('./router/User/addUpdateUser'));
+//Group Related
+app.post('/getGroup', require('./router/GroupChannel/getGroup'));
+app.post('/addUpdateGroup', require('./router/GroupChannel/addUpdateGroup'));
+//Channel Related
+app.post('/getChannels', require('./router/GroupChannel/getChannels'));

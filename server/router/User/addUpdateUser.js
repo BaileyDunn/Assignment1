@@ -1,5 +1,5 @@
 const { updateLanguageServiceSourceFile } = require("typescript");
-var mongo = require("../data/mongo");
+var mongo = require("../../data/mongo");
 var request = undefined;
 var response = undefined;
 

@@ -1,4 +1,4 @@
-var mongo = require("../data/mongo");
+var mongo = require("../../data/mongo");
 var request = undefined;
 var response = undefined;
 var db = undefined;
