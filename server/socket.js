@@ -1,4 +1,10 @@
 var sendMessage = require("./data/sendMessage")
+var getGroup = require("./data/GroupChannel/getGroup");
+var addUpdateGroup = require("./data/GroupChannel/addUpdateGroup");
+const { getgid } = require("process");
+const addUpdateUser = require("./router/User/addUpdateUser");
+
+var chat = undefined;
 module.exports = {
     connect: function(io, port) {
         //List of socket id's in the that are connected and the room they are connected to
@@ -7,7 +13,7 @@ module.exports = {
         var clientChannels = [];
 
 
-        const chat = io.of("/chat");
+        chat = io.of("/chat");
         chat.on("connection", (socket) => {
             
             socket.on("message", (message)=> {
@@ -27,12 +33,9 @@ module.exports = {
                 }
             });
 
-            socket.on("createGroup", (groupName)=> {
-                //If Group doesnt already exist
-                if(groups.indexOf(groupName) == -1) {
-                    groups.push(groupName);
-                    chat.emit("getGroupList", JSON.stringify(groups));
-                }
+            socket.on("createGroup", (group)=> {
+                //If Group doesnt already exist create it
+                getGroup(group, createGroupCheckCallback)
             });
 
             socket.on("removeChannel", (channelName)=> {
@@ -91,7 +94,20 @@ module.exports = {
         })
     },
 
-    sendMessageCallBack: function() {
+    createChannelCallback: async function(channelName) {
+        //If Channel doesnt already exist
+        if(channels.indexOf(channelName) == -1) {
+            channels.push(channelName);
+            chat.emit("getChannelList", JSON.stringify(channels));
+        }
+    }
+}
 
+async function createGroupCheckCallback(existingGroup, newGroup) {
+    if(existingGroup === null) {
+        addUpdateGroup(newGroup, function(groups) {
+            console.log("Emmitted new group")
+            chat.emit("getGroupList", JSON.stringify(groups));
+        });
     }
 }

@@ -92,7 +92,7 @@ export class LeftPanelComponent implements OnInit {
   }
 
   createGroup() {
-    this.socketService.createGroup(this.newGroup);
+    this.socketService.createGroup(new Group(this.newGroup));
     this.socketService.reqGroupList();
     this.newGroup = "";
   }
@@ -127,4 +127,17 @@ class Account {
       this.email = Email;
       this.superUser = SuperUser
    }
+}
+
+class Group {
+  groupName:string;
+  users: [];
+  admins: [];
+  channels: [];
+  constructor(groupName) { 
+    this.groupName = groupName;
+    this.users = [];
+    this.admins = [];
+    this.channels = []
+ }
 }
